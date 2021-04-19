@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 class App extends Component {
   render() {
-    console.log('popppppp');
     return (
       <div>
         <h1>Hello World</h1>
