@@ -12,3 +12,12 @@ import {
   Alert
 } from 'reactstrap';
 
+const RegisterModal = () => {
+  return (
+    <div>
+      <h1>Hello From RegisterModal</h1>
+    </div>
+  );
+};
+
+export default RegisterModal;
