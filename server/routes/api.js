@@ -31,6 +31,7 @@ router.post(
 router.post('/meals', mealController.createMeal, (req, res) => {
   return res.status(200).json({
     message: 'Meal created.',
+    mealID: res.locals.mealID._id,
   });
 });
 
@@ -72,17 +73,15 @@ router.post(
   }
 );
 
-router.get('/events',
+router.get(
+  '/events',
   userController.checkChef,
   eventController.getEvents,
   // eventController.parseEvents,
   (req, res) => {
-    return res.status(200).json(res.locals.events)
+    return res.status(200).json(res.locals.events);
   }
 );
-
-
-
 
 // USERS
 // create user - name/password/ischef
