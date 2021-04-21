@@ -77,11 +77,15 @@ router.get(
   '/events',
   userController.checkChef,
   eventController.getEvents,
-  // eventController.parseEvents,
   (req, res) => {
     return res.status(200).json(res.locals.events);
   }
 );
+
+// access user subscriptions
+router.get('/subs', subscriptionController.getSubs, (req, res) => {
+  return res.status(200).json(res.locals.subs);
+});
 
 // USERS
 // create user - name/password/ischef
