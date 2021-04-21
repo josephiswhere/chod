@@ -50,6 +50,15 @@ CREATE TABLE public.events (
   OIDS=FALSE
 );
 
+CREATE TABLE public.sessions (
+	"_id" serial NOT NULL,
+	"cookie_id" varchar NOT NULL,
+  "expires_by" timestamp NOT NULL,
+	CONSTRAINT "sessions_pk" PRIMARY KEY ("_id")
+) WITH (
+  OIDS=FALSE
+);
+
 ALTER TABLE public.meals ADD CONSTRAINT "meals_fk0" FOREIGN KEY ("chef_id") REFERENCES public.users("_id");
 
 ALTER TABLE public.events ADD CONSTRAINT "events_fk0" FOREIGN KEY ("meal_id") REFERENCES public.meals("_id");

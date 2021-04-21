@@ -6,15 +6,17 @@ const eventController = {};
 eventController.createEvent = (req, res, next) => {
   const { date, mealID } = req.body;
   const text = 'INSERT INTO events (date, meal_id) VALUES ($1, $2)';
-  const values = [ date, mealID ];
-  db.query(text, values).then((resp) => {
-    return next();
-  }).catch((err) => {
-    next({
-      log: `Error in createEvent middleware: ${err}`,
-      message: { err: 'An error occurred' },
+  const values = [date, mealID];
+  db.query(text, values)
+    .then((resp) => {
+      return next();
     })
-  })
+    .catch((err) => {
+      return next({
+        log: `Error in createEvent middleware: ${err}`,
+        message: { err: 'An error occurred' },
+      });
+    });
 };
 
 module.exports = eventController;
