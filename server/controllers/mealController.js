@@ -7,10 +7,11 @@ mealController.createMeal = (req, res, next) => {
   console.log(mealController.createMeal);
   const { name, description, chefID } = req.body;
   const text =
-    'INSERT INTO meals (name, description, chef_id) VALUES ($1, $2, $3)';
+    'INSERT INTO meals (name, description, chef_id) VALUES ($1, $2, $3) RETURNING _id';
   const values = [name, description, chefID];
   db.query(text, values)
     .then((resp) => {
+      res.locals.mealID = resp.rows[0];
       return next();
     })
     .catch((err) => {
