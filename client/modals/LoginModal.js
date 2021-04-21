@@ -14,7 +14,6 @@ import {
 
 const LoginModal = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [msg, setMsg] = useState(null);
   const [name, setName] = useState(null);
   const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
@@ -44,9 +43,7 @@ const LoginModal = () => {
         .then((res) => res.json())
         .then((data) => console.log(data))
         .then((setName(user.name)))
-    }
-
-    )
+    })
   };
 
   const onChangeUsername = (e) => {
@@ -64,7 +61,6 @@ const LoginModal = () => {
       <Modal isOpen={isOpen} toggle={toggle}>
         <ModalHeader toggle={toggle}>Login</ModalHeader>
         <ModalBody>
-          {msg ? <Alert color='danger'>{msg}</Alert> : null}
           <Form onSubmit={onSubmit}>
             <FormGroup>
               <Label for='username'>Username</Label>

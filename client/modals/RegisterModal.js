@@ -97,12 +97,12 @@ console.log(44444, res)
             { msg ? <Alert color="danger">{msg}</Alert> : null}
             <Form onSubmit={onSubmit}>
               <FormGroup>
-                <Label for="username">User Name</Label>
+                <Label for="username">Username</Label>
                 <Input 
                   type="text"
                   name="username"
                   id="username"
-                  placeholder="username"
+                  placeholder="Username"
                   className="mb-3"
                   onChange={handleUserNameChange}  // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
                 />
