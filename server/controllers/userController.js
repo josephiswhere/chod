@@ -6,11 +6,17 @@ userController.checkUserExists = (req, res, next) => {
   const { username } = req.body;
   const text = 'SELECT username FROM users WHERE username = ($1)';
   const values = [ username ];
-  db.query(text, values).then((resp) => {
+  
+  //db.query(text, values).then((resp) => {
+  db.query(text, values)
+  .then((resp) => {
+    console.log(666666, resp.rows)   
     if (resp.rows.length) res.locals.userExists = true;
     return next();
   }).catch((err) => {
-      next({
+    console.log(777777, err)
+   
+    next({
         log: `Error in checkUsername middleware: ${err}`,
         message: { err: 'An error occurred' },
       })

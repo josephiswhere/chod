@@ -9,6 +9,10 @@ const subscriptionController = require('../controllers/subscriptionController');
 
 // createUser(name, password, isChef)
 router.post('/users', userController.checkUserExists, userController.createUser, (req, res) => {
+
+
+  console.log(33333, res)
+
   if (res.locals.userExists) { 
     return res.status(409).json({
       message: 'Username already exists.'
