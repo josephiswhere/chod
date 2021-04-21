@@ -1,5 +1,6 @@
 const path = require('path');
 
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
@@ -8,6 +9,7 @@ const apiRouter = require('./routes/api');
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/build', express.static(path.resolve(__dirname, '../build')));

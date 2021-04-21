@@ -6,7 +6,7 @@ const sessionController = {};
 // verify session - on page loads
 
 sessionController.startSession = (req, res, next) => {
-  console.log('sessionController:startSession');
+  console.log('sessionController.startSession');
   if (res.locals.loggedIn) {
     const sessionLength = '10 minutes';
     const { _id } = res.locals.userInfo;

@@ -4,6 +4,7 @@ const subscriptionController = {};
 
 // createSubscription(eventID, userID)
 subscriptionController.createSubscription = (req, res, next) => {
+  console.log('subscriptionController.createSubscription');
   const { userID, eventID } = req.body;
   const text = 'INSERT INTO subscriptions (user_id, event_id) VALUES ($1, $2)';
   const values = [userID, eventID];
