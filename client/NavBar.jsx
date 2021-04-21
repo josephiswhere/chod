@@ -14,11 +14,11 @@ import {
   } from 'reactstrap';
 
 const NavBar = ({user, setUser, isAuthenticated, setisAuthenticated}) => {
-  const [isOpen, setIsOpen] = useState(false)
+  // const [isOpen, setIsOpen] = useState(false)
 
-  const toggle = () => {
-    setIsOpen(!isOpen)
-  }
+  // const toggle = () => {
+  //   setIsOpen(!isOpen)
+  // }
 
 
   useEffect(() => {
@@ -71,12 +71,11 @@ const NavBar = ({user, setUser, isAuthenticated, setisAuthenticated}) => {
         <Navbar color="dark" dark expand="sm" className="mb-5">
           <Container>
             <NavbarBrand href="/">Home</NavbarBrand>
-            <NavbarToggler onClick={toggle} />
-            <Collapse isOpen={isOpen} navbar>
-              <Nav className="ml-auto" navbar>
-                {isAuthenticated ? authLinks : guestLinks}
-              </Nav>
-            </Collapse>
+            {/* <NavbarToggler onClick={toggle} /> */}
+            {/* <Collapse isOpen={isOpen} navbar> */}
+            <Nav className="ml-auto" navbar>
+              {isAuthenticated ? authLinks : guestLinks}
+            </Nav>
           </Container>
         </Navbar>
       </div>
