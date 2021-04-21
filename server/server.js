@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
-app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 
 app.use((req, res) => res.status(404).send('404: Page Not Found'));
 
@@ -35,4 +35,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
-
