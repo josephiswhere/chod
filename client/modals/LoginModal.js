@@ -16,7 +16,7 @@ const LoginModal = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [msg, setMsg] = useState(null);
   const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
+  const [username, setUsername] = useState(null);
   const [password, setPassword] = useState(null);
 
   const toggle = () => {
@@ -26,7 +26,7 @@ const LoginModal = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     const user = {
-      email,
+      username,
       password,
     };
     console.log('user', user)
@@ -38,7 +38,7 @@ const LoginModal = () => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        email: user.email,
+        username: user.username,
         password: user.password,
       })
         .then((res) => res.json())
@@ -49,8 +49,8 @@ const LoginModal = () => {
     )
   };
 
-  const onChangeEmail = (e) => {
-    setEmail(e.target.value);
+  const onChangeUsername = (e) => {
+    setUsername(e.target.value);
   };
   const onChangePassword = (e) => {
     setPassword(e.target.value);
@@ -67,14 +67,14 @@ const LoginModal = () => {
           {msg ? <Alert color='danger'>{msg}</Alert> : null}
           <Form onSubmit={onSubmit}>
             <FormGroup>
-              <Label for='email'>Email</Label>
+              <Label for='username'>Username</Label>
               <Input
-                type='email'
-                name='email' // SHOULD BE SAME AS IN STATE
-                id='email'
-                placeholder='Email'
+                type='username'
+                name='username' // SHOULD BE SAME AS IN STATE
+                id='username'
+                placeholder='Username'
                 className='mb-3'
-                onChange={onChangeEmail} // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
+                onChange={onChangeUsername} // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
               />
 
               <Label for='password'>Password</Label>
