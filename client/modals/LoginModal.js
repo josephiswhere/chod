@@ -12,14 +12,15 @@ import {
   Alert,
 } from 'reactstrap';
 
-const LoginModal = () => {
+const LoginModal = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [name, setName] = useState(null);
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+  //const [name, setName] = useState(null);
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
 
   const toggle = () => {
     setIsOpen(!isOpen);
+    console.log('NAME', user);
   };
 
   const onSubmit = (e) => {
@@ -28,22 +29,35 @@ const LoginModal = () => {
       username,
       password,
     };
-    console.log('user', user)
+    console.log('user', user);
 
     // ATTEMPT TO LOGIN
     fetch('/api/login', {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json"
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         username: user.username,
         password: user.password,
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .then((setName(user.name)))
+      }),
     })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log('result successful in Login onSubmit', result);
+        if (result.loggedIn === true) {
+          console.log('login successful in Login onSubmit');
+          setUser(result.name);
+          setisAuthenticated(true);
+        }
+        else if (result.loggedIn === false) {
+          alert('Failed Login Attempt')
+        }
+      })
+      .catch((err) => console.log('err in Login onSubmit', err));
+
+    setUsername('');
+    setPassword('');
   };
 
   const onChangeUsername = (e) => {
@@ -70,6 +84,7 @@ const LoginModal = () => {
                 id='username'
                 placeholder='Username'
                 className='mb-3'
+                value={username}
                 onChange={onChangeUsername} // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
               />
 
@@ -80,6 +95,7 @@ const LoginModal = () => {
                 id='password'
                 placeholder='Password'
                 className='mb-3'
+                value={password}
                 onChange={onChangePassword} // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
               />
 

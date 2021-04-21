@@ -27,7 +27,10 @@ const App = () => {
             exact
             path='/patron'
             component={() => (
-              <PatronContainer user={user} isAuthenticated={isAuthenticated} />
+              <PatronContainer
+                user={user}
+                isAuthenticated={isAuthenticated}
+              />
             )}
           />
           {/* <Route exact path='/chef' component={() => <ChefContainer/>}/> */}
