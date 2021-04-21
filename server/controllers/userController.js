@@ -42,7 +42,7 @@ userController.createUser = (req, res, next) => {
 userController.verifyUser = (req, res, next) => {
   console.log('userController.verifyUser');
   const { username, password } = req.body;
-  const text = `SELECT _id, name FROM users WHERE username = ($1) AND password = ($2)`;
+  const text = 'SELECT _id, name FROM users WHERE username = ($1) AND password = ($2)';
   const values = [username, password];
   db.query(text, values)
     .then((resp) => {
@@ -56,6 +56,27 @@ userController.verifyUser = (req, res, next) => {
     .catch((err) => {
       return next({
         log: `Error in verifyUser middleware: ${err}`,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
+
+// check isChef is truthy
+// query users table for userID, store isChef to res.locals
+userController.checkChef = (req, res, next) => {
+  console.log('userController.checkChef');
+  // const { ssid } = req.cookies;
+  const ssid = 2;
+  const text = 'SELECT is_chef FROM users WHERE _id = ($1)';
+  const values = [ssid];
+  db.query(text, values)
+    .then((resp) => {
+        res.locals.isChef = resp.rows[0];
+        return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error in checkChef middleware: ${err}`,
         message: { err: 'An error occurred' },
       });
     });

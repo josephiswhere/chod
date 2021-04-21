@@ -48,13 +48,6 @@ router.post('/subs', subscriptionController.createSubscription, (req, res) => {
   });
 });
 
-// on login
-// verify user - userController
-// checking usernam
-// checking password
-// set session cookie - cookieController
-// start session - sessionController
-
 router.post(
   '/login',
   userController.verifyUser,
@@ -79,9 +72,17 @@ router.post(
   }
 );
 
-router.get('/', (req, res) => {
-  return res.status(200).send('<h1>testing</h1>');
-});
+router.get('/events',
+  userController.checkChef,
+  eventController.getEvents,
+  // eventController.parseEvents,
+  (req, res) => {
+    return res.status(200).json(res.locals.events)
+  }
+);
+
+
+
 
 // USERS
 // create user - name/password/ischef
