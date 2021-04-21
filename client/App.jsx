@@ -1,7 +1,10 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
-import Welcome from './components/Welcome.jsx';
+// import Welcome from './components/Welcome.jsx';
+import EventModal from './modals/EventModal' 
+import ChefContainer from './components/ChefContainer.jsx';
 import NavBar from './NavBar.jsx';
+import { Container } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -21,10 +24,16 @@ const App = () => {
         setUserType={setUserType}
       />
       <main>
-        <Switch>
-          <Route exact path='/' component={() => <Welcome />} />
+        {/* <Switch> */}
+          {/* <Route exact path='/' component={() => <Welcome />} /> */}
           {/* <Route exact path='/patron' component={() => <PatronContainer/>}/>
           <Route exact path='/chef' component={() => <ChefContainer/>}/> */}
+        {/* </Switch> */}
+        <Switch>
+         <Container>
+          <EventModal />
+          <ChefContainer />
+         </Container>
         </Switch>
       </main>
     </div>

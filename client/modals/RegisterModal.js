@@ -15,7 +15,7 @@ import {
 
 const RegisterModal = () => {
   
-  const [modal, setModal] = useState(false)
+  
   const [username, setUserName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
