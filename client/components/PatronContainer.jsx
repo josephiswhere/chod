@@ -12,8 +12,8 @@ const PatronContainer = ({
 }) => {
   return (
     <Container>
-      <PatronHeader />
-      <Events user={user} userId={userId} isAuthenticated={isAuthenticated} />
+      {isAuthenticated ? <PatronHeader user={user} userId={userId} isAuthenticated={isAuthenticated} /> : null}
+      <Events user={user} setUser={setUser} userId={userId} isAuthenticated={isAuthenticated} />
     </Container>
   );
 };
