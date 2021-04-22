@@ -32,7 +32,7 @@ eventController.getEvents = (req, res, next) => {
                   JOIN users u ON m.chef_id = u._id
                   WHERE m.chef_id = ($1)
                   ORDER BY date`;
-    values = [2]; //Had to change to fix -Joseph
+    values = [2]; //Had to change to fix. used to be [userid] -Joseph
     db.query(text, values)
       .then((resp) => {
         res.locals.events = resp.rows;
