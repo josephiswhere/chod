@@ -16,9 +16,9 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
       });
   }, []); //only if user is updated
 
-  const subscribe = (id) => {
+  const subscribe = (eventid) => {
     console.log('id from within events', userId);
-    console.log('subscribe', id);
+    console.log('subscribe', eventid);
     fetch('api/subs', {
       method: 'POST',
       headers: {
@@ -26,7 +26,7 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
       },
       body: JSON.stringify({
         userID: userId,
-        eventID: id,
+        eventID: eventid,
       }),
     })
       .then((res) => res.json())
@@ -40,8 +40,8 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
       <ListGroup>
         <TransitionGroup className='all-events-list'>
           <h2>All Events</h2>
-          {eventsList.map(({ id, meal, date, slotsLeft, discription }) => (
-            <CSSTransition key={id} timeout={500} classNames='fade'>
+          {eventsList.map(({ eventid, meal, date, slots, discription }) => (
+            <CSSTransition key={eventid} timeout={500} classNames='fade'>
               <ListGroupItem>
                 {isAuthenticated ? (
                   <Button
@@ -49,7 +49,7 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
                     className='add-btn'
                     color='primary'
                     size='sm'
-                    onClick={() => subscribe(id)}
+                    onClick={() => subscribe(eventid)}
                   >
                     Add to Schedual
                   </Button>
@@ -70,7 +70,7 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
                 </div>
                 <h4 style={{ position: 'relative' }}>{meal}</h4>
                 <div style={{ position: 'relative' }}>
-                  Spots Remaining: {slotsLeft}
+                  Spots Remaining: {slots}
                 </div>
               </ListGroupItem>
             </CSSTransition>

@@ -41,13 +41,7 @@ const App = () => {
               />
             )}
           />
-          {/* <Route exact path='/chef' component={() => <ChefContainer/>}/> */}
-        </Switch>
-        <Switch>
-          <Container>
-            <EventModal />
-            <ChefContainer />
-          </Container>
+          <Route exact path='/chef' component={() => <ChefContainer/>}/>
         </Switch>
       </main>
     </div>

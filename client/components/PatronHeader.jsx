@@ -12,18 +12,19 @@ import {
   Button,
 } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
-import LoginModal from '../modals/LoginModal';
+
 
 const PatronHeader = ({ user, userId, isAuthenticated }) => {
-  const [eventsList, setEventsList] = useState([]);
+  const [myEventsList, setMyEventsList] = useState([]);
+
 
   useEffect(() => {
-    console.log('Events useEfect', userId);
-    fetch('/api/events')
+    console.log('PatronHeader useEfect', userId);
+    fetch('/api/subs')
       .then((res) => res.json())
       .then((results) => {
-        setEventsList(results);
-        console.log('get events fetch', results);
+        setMyEventsList(results);
+        console.log('get subs fetch', results);
       });
   }, []); //only if user is updated
 
@@ -57,30 +58,32 @@ const PatronHeader = ({ user, userId, isAuthenticated }) => {
           <Button>edit</Button>
         </CardBody>
       </Card>
-      <ListGroup style={{ display:'inline-block',position: 'relative', left: '10%', width: '60%' }}>
-        <TransitionGroup className='upcoming-events-list'>
+      {myEventsList.length ? 
+        <ListGroup style={{ display:'inline-block', overflowY:'scroll', position: 'relative', left: '10%', width: '60%' , maxHeight:'320px'}}>
           <h2>My Upcoming Events</h2>
-          {eventsList.map(({ id, meal, date, slotsLeft, discription }) => (
-            <CSSTransition key={id} timeout={500} classNames='fade'>
-              <ListGroupItem>
-                <Button
-                  style={{ position: 'absolute', right: '5px', top: '30%' }}
-                  class='btn btn-outline-danger'
-                  className='add-btn'
-                  color='link'
-                  text='danger'
-                  size='sm'
-                  onClick={() => unsubscribe(id)}
-                >
-                  Unsubscribe
-                </Button>
-                <h5 style={{ position: 'relative' }}>{meal}</h5>
-                <div style={{ position: 'relative' }}>{date}</div>
-              </ListGroupItem>
-            </CSSTransition>
-          ))}
-        </TransitionGroup>
-      </ListGroup>
+          <TransitionGroup className='upcoming-events-list'>
+            {myEventsList.map(({ subid, name, date, chef, discription }) => (
+              <CSSTransition key={subid} timeout={500} classNames='fade'>
+                <ListGroupItem>
+                  <Button
+                    style={{ position: 'absolute', right: '5px', top: '30%' }}
+                    className='add-btn'
+                    color='link'
+                    text='danger'
+                    size='sm'
+                    onClick={() => unsubscribe(subid)}
+                  >
+                    Unsubscribe
+                  </Button>
+                  <h5 style={{ position: 'relative' }}>{name}</h5>
+                  <div style={{ position: 'relative' }}>{date}</div>
+                </ListGroupItem>
+              </CSSTransition>
+            ))}
+          </TransitionGroup>
+        </ListGroup>
+      : null}
+        
     </Container>
   );
 };
