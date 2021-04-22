@@ -1,13 +1,14 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import LoginModal from '../modals/LoginModal';
 
-const Events = ({ user, userId, isAuthenticated }) => {
+const Events = ({ user, setUser, userId, isAuthenticated }) => {
   const [eventsList, setEventsList] = useState([]);
 
   useEffect(() => {
     console.log('Events useEfect', userId);
-    fetch('/api/events')
+    fetch('/api/allevents')
       .then((res) => res.json())
       .then((results) => {
         setEventsList(results);
@@ -15,9 +16,9 @@ const Events = ({ user, userId, isAuthenticated }) => {
       });
   }, []); //only if user is updated
 
-  const subscribe = (id) => {
-    console.log('id from within events', userId)
-    console.log('subscribe', id);
+  const subscribe = (eventid) => {
+    console.log('id from within events', userId);
+    console.log('subscribe', eventid);
     fetch('api/subs', {
       method: 'POST',
       headers: {
@@ -25,32 +26,43 @@ const Events = ({ user, userId, isAuthenticated }) => {
       },
       body: JSON.stringify({
         userID: userId,
-        eventID: id,
+        eventID: eventid,
       }),
     })
-    .then((res) => res.json())
-    .then((results) => {
-      console.log('add sub fetch', results);
-    });
+      .then((res) => res.json())
+      .then((results) => {
+        console.log('add sub fetch', results);
+      });
     //alert if no spots remaining
   };
   return (
-    <Container>
+    <Container style={{paddingTop:'20px'}}>
       <ListGroup>
-        <TransitionGroup className='shopping-list'>
+        <TransitionGroup className='all-events-list'>
           <h2>All Events</h2>
-          {eventsList.map(({ id, meal, date, slotsLeft, discription }) => (
-            <CSSTransition key={id} timeout={500} classNames='fade'>
+          {eventsList.map(({ eventid, meal, date, slots, discription }) => (
+            <CSSTransition key={eventid} timeout={500} classNames='fade'>
               <ListGroupItem>
-                <Button
-                  style={{ position: 'absolute', right: '5px', top: '30%' }}
-                  className='add-btn'
-                  color='primary'
-                  size='sm'
-                  onClick={() => subscribe(id)}
-                >
-                  Add to Schedual
-                </Button>
+                {isAuthenticated ? (
+                  <Button
+                    style={{ position: 'absolute', right: '5px', top: '30%' }}
+                    className='add-btn'
+                    color='primary'
+                    size='sm'
+                    onClick={() => subscribe(eventid)}
+                  >
+                    Add to Schedual
+                  </Button>
+                ) : (
+                  <button
+                    style={{ position: 'absolute', right: '5px', top: '30%' }}
+                    className='add-btn'
+                    color='primary'
+                    size='0'
+                  >
+                    <LoginModal />
+                  </button>
+                )}
                 <div
                   style={{ position: 'absolute', right: '135px', top: '35%' }}
                 >
@@ -58,7 +70,7 @@ const Events = ({ user, userId, isAuthenticated }) => {
                 </div>
                 <h4 style={{ position: 'relative' }}>{meal}</h4>
                 <div style={{ position: 'relative' }}>
-                  Spots Remaining: {slotsLeft}
+                  Spots Remaining: {slots}
                 </div>
               </ListGroupItem>
             </CSSTransition>

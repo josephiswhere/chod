@@ -69,7 +69,7 @@ const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated, userId, se
     <div>
       <Navbar color='dark' dark expand='sm' className='mb-5'>
         <Container>
-          <NavLink to='/home' activeStyle={{ fontWeight: 'bold' }}>
+          <NavLink to='/' activeStyle={{ fontWeight: 'bold' }}>
             <NavbarBrand> Home </NavbarBrand>
           </NavLink>
           <NavLink to='/patron' activeStyle={{ fontWeight: 'bold' }}>
