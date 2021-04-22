@@ -43,13 +43,16 @@ router.post('/events', eventController.createEvent, (req, res) => {
 });
 
 // createSubscription(eventID, userID)
-router.post('/subs',
+router.post(
+  '/subs',
   subscriptionController.createSubscription,
-  eventController.decreaseSlots, (req, res) => {
+  eventController.decreaseSlots,
+  (req, res) => {
     return res.status(200).json({
       message: 'Subscription created.',
-   });
-});
+    });
+  }
+);
 
 router.post(
   '/login',
@@ -60,11 +63,11 @@ router.post(
     //check if login succeeded
     if (res.locals.loggedIn) {
       //send message let access
-      const { name, _id } = res.locals.userInfo;
+      const { name, id } = res.locals.userInfo;
       return res.status(200).json({
         message: 'Login successful',
         loggedIn: true,
-        id: _id,
+        id,
         name,
       });
     } else {
@@ -85,20 +88,14 @@ router.get(
     if (isChef) {
       return res.status(200).json(res.locals.events);
     } else {
-      return res
-        .status(403)
-        .json({ message: 'Invalid permissions.'});
+      return res.status(403).json({ message: 'Invalid permissions.' });
     }
   }
 );
 
-router.get(
-  '/allevents',
-  eventController.getAllEvents,
-  (req, res) => {
-    return res.status(200).json(res.locals.events);
-  }
-);
+router.get('/allevents', eventController.getAllEvents, (req, res) => {
+  return res.status(200).json(res.locals.events);
+});
 
 // access user subscriptions
 router.get('/subs', subscriptionController.getSubs, (req, res) => {
