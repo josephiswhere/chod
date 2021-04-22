@@ -28,6 +28,13 @@ const PatronHeader = ({ user, userId, isAuthenticated }) => {
       });
   }, []); //only if user is updated
 
+  function getFormattedDate(date) {
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+  
+    return month + '/' + day + '/' + year;
+  }
   const unsubscribe = (id) => {
     console.log('id from within patronHeader', userId);
     console.log('unsubscribe', id);
@@ -76,7 +83,7 @@ const PatronHeader = ({ user, userId, isAuthenticated }) => {
                     Unsubscribe
                   </Button>
                   <h5 style={{ position: 'relative' }}>{name}</h5>
-                  <div style={{ position: 'relative' }}>{date}</div>
+                  <div style={{ position: 'relative' }}>{getFormattedDate(new Date(date.replace(' ', 'T')))}</div>
                 </ListGroupItem>
               </CSSTransition>
             ))}

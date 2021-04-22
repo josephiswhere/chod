@@ -16,6 +16,14 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
       });
   }, []); //only if user is updated
 
+  function getFormattedDate(date) {
+    let year = date.getFullYear();
+    let month = (1 + date.getMonth()).toString().padStart(2, '0');
+    let day = date.getDate().toString().padStart(2, '0');
+  
+    return month + '/' + day + '/' + year;
+  }
+
   const subscribe = (eventid) => {
     console.log('id from within events', userId);
     console.log('subscribe', eventid);
@@ -64,9 +72,9 @@ const Events = ({ user, setUser, userId, isAuthenticated }) => {
                   </button>
                 )}
                 <div
-                  style={{ position: 'absolute', right: '135px', top: '35%' }}
+                  style={{ position: 'absolute', right: '135px', top: '40%' }}
                 >
-                  {date}
+                  {getFormattedDate(new Date(date.replace(' ', 'T')))}
                 </div>
                 <h4 style={{ position: 'relative' }}>{meal}</h4>
                 <div style={{ position: 'relative' }}>
