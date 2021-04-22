@@ -37,31 +37,39 @@ console.log(44444, res)
   }, []);
 
   const onDeleteClick =(id) => {
-    //this.props.deleteItem(id);
+    console.log(88888, id)
   }
 
-    return (
-      <Container>
-          <ListGroup horizontal>
-            <TransitionGroup className="event-list">
-              {events.map(({ _id, date, meal, description }) => (
-                <CSSTransition key={_id} timeout={500} classNames="fade">
-                  <ListGroupItem>
-                    <Button
-                      className="remove-btn"
-                      color="danger"
-                      size="sm"
-                      onClick={onDeleteClick.bind(this, _id)}
-                    >&times;</Button>                 
-                    
-                    <div>{getFormattedDate(new Date(date.replace(' ', 'T')))}</div>
-                    <div>{meal}</div> 
-                    <div>{description}</div> 
-                  </ListGroupItem>
-                </CSSTransition>
-              ))}
-            </TransitionGroup>
-          </ListGroup>
-      </Container>
-    );
+  return (
+
+    <Container>
+      <div>  
+          {events.map(({ _id, date, meal, description }) => (
+            
+            <ListGroup horizontal>
+              <ListGroupItem style={{width: 50 + 'px'}}>
+                <Button
+                  className="remove-btn"
+                  color="danger"
+                  size="sm"
+                  onClick={onDeleteClick.bind(this, _id)}
+                  >&times;</Button>                 
+              </ListGroupItem>
+              <ListGroupItem style={{width: 125 + 'px'}}>
+                {getFormattedDate(new Date(date.replace(' ', 'T')))}
+              </ListGroupItem>
+              <ListGroupItem style={{width: 500 + 'px'}}>
+                {meal}
+              </ListGroupItem>
+              <ListGroupItem style={{width: 700 + 'px'}}>
+                {description}
+              </ListGroupItem>
+            </ListGroup>
+            
+          ))}
+
+      </div> 
+    </Container>
+
+  );
 }
