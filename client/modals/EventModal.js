@@ -12,7 +12,6 @@ import {
 import { enUS } from 'date-fns/locale'
 import { DatePicker } from 'react-nice-dates'
 import 'react-nice-dates/build/style.css'
-import { Events } from 'pg';
 
 // Custom hook for handling input boxes
 // saves us from creating onChange handlers for them individually
@@ -89,6 +88,7 @@ console.log(44444, res)
 console.log(55555, res)
         if (res.status === 200){
           toggle();
+          window.location.reload();
         }
       })
     }
@@ -104,7 +104,7 @@ console.log(55555, res)
           onClick={toggle}
         >Create Event</Button>
         
-        <Modal isOpen={modal} toggle={toggle}>
+        <Modal isOpen={modal} toggle={toggle} >
           <ModalHeader toggle={toggle}>Create a Meal Event!</ModalHeader>
           <ModalBody>
             <Form onSubmit={onSubmit}>
