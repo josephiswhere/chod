@@ -58,10 +58,11 @@ router.post(
     //check if login succeeded
     if (res.locals.loggedIn) {
       //send message let access
-      const { name } = res.locals.userInfo;
+      const { name, _id } = res.locals.userInfo;
       return res.status(200).json({
         message: 'Login successful',
         loggedIn: true,
+        id: _id,
         name,
       });
     } else {
@@ -74,45 +75,36 @@ router.post(
 );
 
 router.get(
-  '/events',
+  '/chefevents',
   userController.checkChef,
-  eventController.getEvents,
-  // eventController.parseEvents,
+  eventController.getChefEvents,
+  (req, res) => {
+    const isChef = res.locals.isChef.is_chef;
+    if (isChef) {
+      return res.status(200).json(res.locals.events);
+    } else {
+      return res
+        .status(403)
+        .json({ message: 'Invalid permissions.'});
+    }
+  }
+);
+
+router.get(
+  '/allevents',
+  eventController.getAllEvents,
   (req, res) => {
     return res.status(200).json(res.locals.events);
   }
 );
 
-// USERS
-// create user - name/password/ischef
-// log in - stretch - session data?
-// add bio
-//--
-//X createUser(name, password, isChef)
-// logIn(name, password)
-// addBio(userID, bio)
+// access user subscriptions
+router.get('/subs', subscriptionController.getSubs, (req, res) => {
+  return res.status(200).json(res.locals.subs);
+});
 
-// MEALS
-// create meal - name/description/chef_id(auto)
-// Remove - Meal_ID
-//--
-//X createMeal(name, description, chefID)
-// getMeals(chefID)
-// removeMeal(mealID)
-
-// EVENT
-//X create event - Date/Meal_ID
-// Remove - Event_ID
-//--
-// createEvent(date, mealID)
-// removeEvent(eventID)
-// getEvents()
-
-// SUBSCRIPTIONS
-//X Subscribe - Event_ID/User_ID
-// Unsubscribe - ''
-//--
-// createSubscription(eventID, userID)
-// removeSubscription(subscriptionID)
+router.get('/meals', mealController.getMeals, (req, res) => {
+  return res.status(200).json(res.locals.meals);
+});
 
 module.exports = router;

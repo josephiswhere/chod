@@ -1,4 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
 import RegisterModal from './modals/RegisterModal.js';
 import LoginModal from './modals/LoginModal.js';
 
@@ -9,11 +10,11 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
-  NavLink,
+  NavLink as SmallBrand,
   Container,
 } from 'reactstrap';
 
-const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
+const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated, userId, setUserId }) => {
   // const [isOpen, setIsOpen] = useState(false)
 
   // const toggle = () => {
@@ -41,7 +42,7 @@ const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
         </span>
       </NavItem>
       <NavItem>
-        <NavLink onClick={onLogout}>Logout</NavLink>
+        <SmallBrand onClick={onLogout}>Logout</SmallBrand>
       </NavItem>
     </Fragment>
   );
@@ -55,6 +56,8 @@ const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
         <LoginModal
           user={user}
           setUser={setUser}
+          userId={userId}
+          setUserId={setUserId}
           isAuthenticated={isAuthenticated}
           setisAuthenticated={setisAuthenticated}
         />
@@ -66,27 +69,15 @@ const NavBar = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
     <div>
       <Navbar color='dark' dark expand='sm' className='mb-5'>
         <Container>
-          {window.location.pathname === '/' ? (
-            <NavbarBrand className='font-weight-bold' href='/'>
-              Home
-            </NavbarBrand>
-          ) : (
-            <NavbarBrand href='/'> Home </NavbarBrand>
-          )};
-          {window.location.pathname === '/chef' ? (
-            <NavbarBrand className='font-weight-bold' href='/chef'>
-              Chef Portal
-            </NavbarBrand>
-          ) : (
-            <NavbarBrand href='/chef'> Chef Portal </NavbarBrand>
-          )};
-          {window.location.pathname === '/patron' ? (
-            <NavbarBrand className='font-weight-bold' href='/patron'>
-              Patron Portal
-            </NavbarBrand>
-          ) : (
-            <NavbarBrand href='/patron'> Patron Portal </NavbarBrand>
-          )}
+          <NavLink to='/home' activeStyle={{ fontWeight: 'bold' }}>
+            <NavbarBrand> Home </NavbarBrand>
+          </NavLink>
+          <NavLink to='/patron' activeStyle={{ fontWeight: 'bold' }}>
+            <NavbarBrand> Patron Portal </NavbarBrand>
+          </NavLink>
+          <NavLink to='/chef' activeStyle={{ fontWeight: 'bold' }}>
+            <NavbarBrand> Chef Portal </NavbarBrand>
+          </NavLink>
           {/* <NavbarToggler onClick={toggle} /> */}
           {/* <Collapse isOpen={isOpen} navbar> */}
           <Nav className='ml-auto' navbar>

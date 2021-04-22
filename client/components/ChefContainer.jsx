@@ -16,7 +16,7 @@ export default function ChefContainer() {
   
   const userid = document.cookie; 
   useEffect(() => {
-    fetch('/api/events', {
+    fetch('/api/chefevents', {
       method: 'GET',
       headers: {
         Accept: 'application/json',
@@ -44,7 +44,7 @@ console.log(44444, res)
 
     <Container>
       <div>  
-          {events.map(({ _id, date, meal, description }) => (
+          {events.map(({ eventID, date, meal, description }) => (
             
             <ListGroup horizontal>
               <ListGroupItem style={{width: 50 + 'px'}}>
@@ -52,7 +52,7 @@ console.log(44444, res)
                   className="remove-btn"
                   color="danger"
                   size="sm"
-                  onClick={onDeleteClick.bind(this, _id)}
+                  onClick={onDeleteClick.bind(this, eventID)}
                   >&times;</Button>                 
               </ListGroupItem>
               <ListGroupItem style={{width: 125 + 'px'}}>

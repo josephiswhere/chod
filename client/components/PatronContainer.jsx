@@ -1,13 +1,19 @@
 import React from 'react';
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap';
-import PatronHeader from './PatronHeader.jsx'
-import Events from './Events.jsx'
+import PatronHeader from './PatronHeader.jsx';
+import Events from './Events.jsx';
 
-const PatronContainer = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
+const PatronContainer = ({
+  user,
+  userId,
+  setUser,
+  isAuthenticated,
+  setisAuthenticated,
+}) => {
   return (
     <Container>
-      <PatronHeader/>
-      <Events/>
+      <PatronHeader />
+      <Events user={user} userId={userId} isAuthenticated={isAuthenticated} />
     </Container>
   );
 };
