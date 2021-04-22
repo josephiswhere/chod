@@ -3,7 +3,7 @@ const db = require('../models/cheftasticModels');
 const userController = {};
 
 userController.checkUserExists = (req, res, next) => {
-  console.log('userController.checkUserExists');
+  // console.log('userController.checkUserExists');
   const { username } = req.body;
   const text = 'SELECT username FROM users WHERE username = ($1)';
   const values = [username];
@@ -20,9 +20,8 @@ userController.checkUserExists = (req, res, next) => {
     });
 };
 
-//TODO - convert password to bcrypt
 userController.createUser = (req, res, next) => {
-  console.log('userController.createUser');
+  // console.log('userController.createUser');
   if (res.locals.userExists) return next();
   const { email, username, password, isChef, name } = req.body;
   const text =
@@ -42,7 +41,7 @@ userController.createUser = (req, res, next) => {
 };
 
 userController.verifyUser = (req, res, next) => {
-  console.log('userController.verifyUser');
+  // console.log('userController.verifyUser');
   const { username, password } = req.body;
   const text =
     'SELECT _id AS id, name FROM users WHERE username = ($1) AND password = ($2)';
@@ -64,10 +63,8 @@ userController.verifyUser = (req, res, next) => {
     });
 };
 
-// check isChef is truthy
-// query users table for userID, store isChef to res.locals
 userController.checkChef = (req, res, next) => {
-  console.log('userController.checkChef');
+  // console.log('userController.checkChef');
   const { userID } = req.cookies;
   const text = 'SELECT is_chef FROM users WHERE _id = ($1)';
   const values = [userID];
