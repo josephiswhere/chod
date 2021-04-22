@@ -31,6 +31,7 @@ router.post(
 router.post('/meals', mealController.createMeal, (req, res) => {
   return res.status(200).json({
     message: 'Meal created.',
+    mealID: res.locals.mealID._id,
   });
 });
 
@@ -77,11 +78,19 @@ router.get(
   '/events',
   userController.checkChef,
   eventController.getEvents,
-  // eventController.parseEvents,
   (req, res) => {
     return res.status(200).json(res.locals.events);
   }
 );
+
+// access user subscriptions
+router.get('/subs', subscriptionController.getSubs, (req, res) => {
+  return res.status(200).json(res.locals.subs);
+});
+
+router.get('/meals', mealController.getMeals, (req, res) => {
+  return res.status(200).json(res.locals.meals);
+});
 
 // USERS
 // create user - name/password/ischef

@@ -22,18 +22,17 @@ eventController.createEvent = (req, res, next) => {
 
 eventController.getEvents = (req, res, next) => {
   console.log('eventController.getEvents', res.locals.isChef);
-  // const { ssid } = req.cookies;
-  const ssid = 2;
+  const { userid } = req.cookies;
   const isChef = res.locals.isChef.is_chef;
 
   if (isChef) {
-    const text = `SELECT m._id as id, date, m.name AS meal, m.description
-                         FROM events e
-                         JOIN meals m ON e.meal_id = m._id
-                         JOIN users u ON m.chef_id = u._id
-                         WHERE m.chef_id = ($1)
-                         ORDER BY date`;
-    values = [ssid];
+    const text = `SELECT date, m.name AS meal, m.description, m._id AS id
+                  FROM events e
+                  JOIN meals m ON e.meal_id = m._id
+                  JOIN users u ON m.chef_id = u._id
+                  WHERE m.chef_id = ($1)
+                  ORDER BY date`;
+    values = [2]; //Had to change to fix -Joseph
     db.query(text, values)
       .then((resp) => {
         res.locals.events = resp.rows;
@@ -48,14 +47,14 @@ eventController.getEvents = (req, res, next) => {
       });
   } else {
     const text = `SELECT
-                 m._id as id, date, m.name AS meal, m.description, u.name AS chef
-                 FROM events e
-                 JOIN meals m ON e.meal_id = m._id
-                 JOIN users u ON m.chef_id = u._id
-                 ORDER BY date`;
+                  date, m.name AS meal, m.description, u.name AS chef, m._id AS id
+                  FROM events e
+                  JOIN meals m ON e.meal_id = m._id
+                  JOIN users u ON m.chef_id = u._id
+                  ORDER BY date`;
     db.query(text)
       .then((resp) => {
-        res.locals.events = resp;
+        res.locals.events = resp.rows;
         return next();
       })
       .catch((err) => {

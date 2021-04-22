@@ -11,6 +11,7 @@ const Events = ({ user, userId, isAuthenticated }) => {
       .then((res) => res.json())
       .then((results) => {
         setEventsList(results);
+        console.log('get events fetch', results);
       });
   }, []); //only if user is updated
 
