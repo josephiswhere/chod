@@ -12,6 +12,7 @@ import {
 import { enUS } from 'date-fns/locale'
 import { DatePicker } from 'react-nice-dates'
 import 'react-nice-dates/build/style.css'
+import { Events } from 'pg';
 
 // Custom hook for handling input boxes
 // saves us from creating onChange handlers for them individually
@@ -48,20 +49,51 @@ const EventModal = () => {
   const onSubmit = e => {
     e.preventDefault();
 
-    const newEvent = {
-      meal: meal,
-      description: description,
-      date: getFormattedDate(date)
+    // const newEvent = {
+    //   meal: meal,
+    //   description: description,
+    //   date: getFormattedDate(date)
+    // }
+  
+  const chefID = document.cookie.substr(document.cookie.indexOf('=') + 1)
+  const body = { name: meal, description: description, chefID: chefID}
+
+console.log(33333, body)
+
+  // CREATE A MEAL FIRST
+  fetch('/api/meals', {
+    method: 'POST',
+    headers: { 'Content-Type' : 'Application/JSON'},
+    body: JSON.stringify(body)    
+  })
+  .then(resp => {
+    return resp.json().then(json => ({ data: json, status: resp.status }))
+  })
+  .then(res => {
+
+console.log(44444, res)
+
+    if (res.status === 200) {
+      
+      const event = { date: getFormattedDate(date), mealID: res.data.mealID }
+      // INSERT NEW EVENT!
+      fetch('/api/events', {
+        method: 'POST',
+        headers: { 'Content-Type' : 'Application/JSON'},
+        body: JSON.stringify(event)    
+      })
+      .then(resp => {
+        return resp.json().then(json => ({ data: json, status: resp.status }))
+      })
+      .then(res => {
+console.log(55555, res)
+        if (res.status === 200){
+          toggle();
+        }
+      })
     }
-
-console.log(newEvent);
-
-
-    // ADD item via addItem action
-    //this.props.addItem(newItem)
-    // CLOSE THE MODAL
-    toggle();
-  }
+  })
+}
 
     return (
       <div>

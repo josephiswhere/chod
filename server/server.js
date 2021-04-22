@@ -1,5 +1,6 @@
 const path = require('path');
 
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const app = express();
 
@@ -8,6 +9,7 @@ const apiRouter = require('./routes/api');
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/build', express.static(path.resolve(__dirname, '../build')));
@@ -16,7 +18,7 @@ app.get('/', (req, res) => {
   return res.status(200).sendFile(path.resolve(__dirname, '../index.html'));
 });
 
-app.use('/api', apiRouter)
+app.use('/api', apiRouter);
 
 app.use((req, res) => res.status(404).send('404: Page Not Found'));
 
@@ -35,4 +37,3 @@ app.use((err, req, res, next) => {
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}...`);
 });
-
