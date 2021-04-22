@@ -6,6 +6,9 @@ const mealController = {};
 mealController.createMeal = (req, res, next) => {
   console.log('mealController.createMeal');
   const { name, description, chefID } = req.body;
+
+console.log(55555, name, description, chefID)
+
   const text =
     'INSERT INTO meals (name, description, chef_id) VALUES ($1, $2, $3) RETURNING _id';
   const values = [name, description, chefID];

@@ -73,6 +73,9 @@ userController.checkChef = (req, res, next) => {
   const values = [userid];
   db.query(text, values)
     .then((resp) => {
+
+console.log(33333, resp.rows)
+
       res.locals.isChef = resp.rows[0];
       return next();
     })
