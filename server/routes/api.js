@@ -43,11 +43,16 @@ router.post('/events', eventController.createEvent, (req, res) => {
 });
 
 // createSubscription(eventID, userID)
-router.post('/subs', subscriptionController.createSubscription, (req, res) => {
-  return res.status(200).json({
-    message: 'Subscription created.',
-  });
-});
+router.post(
+  '/subs',
+  subscriptionController.createSubscription,
+  eventController.decreaseSlots,
+  (req, res) => {
+    return res.status(200).json({
+      message: 'Subscription created.',
+    });
+  }
+);
 
 router.post(
   '/login',
@@ -58,12 +63,12 @@ router.post(
     //check if login succeeded
     if (res.locals.loggedIn) {
       //send message let access
-      const { name, _id } = res.locals.userInfo;
+      const { name, id } = res.locals.userInfo;
       return res.status(200).json({
         message: 'Login successful',
         loggedIn: true,
+        id,
         name,
-        id: _id,
       });
     } else {
       //send message, dont let access
@@ -75,13 +80,22 @@ router.post(
 );
 
 router.get(
-  '/events',
+  '/chefevents',
   userController.checkChef,
-  eventController.getEvents,
+  eventController.getChefEvents,
   (req, res) => {
-    return res.status(200).json(res.locals.events);
+    const isChef = res.locals.isChef.is_chef;
+    if (isChef) {
+      return res.status(200).json(res.locals.events);
+    } else {
+      return res.status(403).json({ message: 'Invalid permissions.' });
+    }
   }
 );
+
+router.get('/allevents', eventController.getAllEvents, (req, res) => {
+  return res.status(200).json(res.locals.events);
+});
 
 // access user subscriptions
 router.get('/subs', subscriptionController.getSubs, (req, res) => {
@@ -91,37 +105,5 @@ router.get('/subs', subscriptionController.getSubs, (req, res) => {
 router.get('/meals', mealController.getMeals, (req, res) => {
   return res.status(200).json(res.locals.meals);
 });
-
-// USERS
-// create user - name/password/ischef
-// log in - stretch - session data?
-// add bio
-//--
-//X createUser(name, password, isChef)
-// logIn(name, password)
-// addBio(userID, bio)
-
-// MEALS
-// create meal - name/description/chef_id(auto)
-// Remove - Meal_ID
-//--
-//X createMeal(name, description, chefID)
-// getMeals(chefID)
-// removeMeal(mealID)
-
-// EVENT
-//X create event - Date/Meal_ID
-// Remove - Event_ID
-//--
-// createEvent(date, mealID)
-// removeEvent(eventID)
-// getEvents()
-
-// SUBSCRIPTIONS
-//X Subscribe - Event_ID/User_ID
-// Unsubscribe - ''
-//--
-// createSubscription(eventID, userID)
-// removeSubscription(subscriptionID)
 
 module.exports = router;

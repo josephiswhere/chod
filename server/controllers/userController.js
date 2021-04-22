@@ -45,7 +45,7 @@ userController.verifyUser = (req, res, next) => {
   console.log('userController.verifyUser');
   const { username, password } = req.body;
   const text =
-    'SELECT _id, name FROM users WHERE username = ($1) AND password = ($2)';
+    'SELECT _id AS id, name FROM users WHERE username = ($1) AND password = ($2)';
   const values = [username, password];
   db.query(text, values)
     .then((resp) => {
@@ -68,12 +68,13 @@ userController.verifyUser = (req, res, next) => {
 // query users table for userID, store isChef to res.locals
 userController.checkChef = (req, res, next) => {
   console.log('userController.checkChef');
-  console.log(req.cookies);
-  const { userid } = req.cookies;
+  const { userID } = req.cookies;
   const text = 'SELECT is_chef FROM users WHERE _id = ($1)';
-  const values = [userid];
+  const values = [userID];
   db.query(text, values)
     .then((resp) => {
+      console.log(33333, resp.rows);
+
       res.locals.isChef = resp.rows[0];
       return next();
     })

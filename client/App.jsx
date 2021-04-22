@@ -1,8 +1,12 @@
 import React, { Component, useState, useEffect } from 'react';
 import { Route, Switch } from 'react-router';
+// import Welcome from './components/Welcome.jsx';
+import EventModal from './modals/EventModal' 
+import ChefContainer from './components/ChefContainer.jsx';
 import Welcome from './components/Welcome.jsx';
 import PatronContainer from './components/PatronContainer.jsx';
 import NavBar from './NavBar.jsx';
+import { Container } from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,6 +42,12 @@ const App = () => {
             )}
           />
           {/* <Route exact path='/chef' component={() => <ChefContainer/>}/> */}
+        </Switch>
+        <Switch>
+          <Container>
+            <EventModal />
+            <ChefContainer />
+          </Container>
         </Switch>
       </main>
     </div>

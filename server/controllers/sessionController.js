@@ -9,8 +9,8 @@ sessionController.startSession = (req, res, next) => {
   console.log('sessionController.startSession');
   if (res.locals.loggedIn) {
     const sessionLength = '10 minutes';
-    const { _id } = res.locals.userInfo;
-    const queryString = `INSERT INTO sessions (cookie_id, expires_by) VALUES (${_id}, NOW() + interval '${sessionLength}')`;
+    const { id } = res.locals.userInfo;
+    const queryString = `INSERT INTO sessions (cookie_id, expires_by) VALUES (${id}, NOW() + interval '${sessionLength}')`;
     db.query(queryString)
       .then(() => {
         return next();

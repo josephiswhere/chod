@@ -45,6 +45,7 @@ CREATE TABLE public.events (
 	"_id" serial NOT NULL,
 	"meal_id" integer NOT NULL,
   "date" timestamp NOT NULL,
+	"slots" integer NOT NULL,
 	CONSTRAINT "events_pk" PRIMARY KEY ("_id")
 ) WITH (
   OIDS=FALSE
