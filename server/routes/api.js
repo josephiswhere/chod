@@ -62,8 +62,8 @@ router.post(
       return res.status(200).json({
         message: 'Login successful',
         loggedIn: true,
-        name,
         id: _id,
+        name,
       });
     } else {
       //send message, dont let access

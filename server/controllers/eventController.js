@@ -26,13 +26,13 @@ eventController.getEvents = (req, res, next) => {
   const isChef = res.locals.isChef.is_chef;
 
   if (isChef) {
-    const text = `SELECT date, m.name AS meal, m.description, m._id AS id
+    const text = `SELECT e._id AS eventID, date, m.name AS meal, m.description,
                   FROM events e
                   JOIN meals m ON e.meal_id = m._id
                   JOIN users u ON m.chef_id = u._id
                   WHERE m.chef_id = ($1)
                   ORDER BY date`;
-    values = [2]; //Had to change to fix -Joseph
+    values = [userid];
     db.query(text, values)
       .then((resp) => {
         res.locals.events = resp.rows;
@@ -47,7 +47,7 @@ eventController.getEvents = (req, res, next) => {
       });
   } else {
     const text = `SELECT
-                  date, m.name AS meal, m.description, u.name AS chef, m._id AS id
+                  e._id AS eventID, date, m.name AS meal, m.description, u.name AS chef
                   FROM events e
                   JOIN meals m ON e.meal_id = m._id
                   JOIN users u ON m.chef_id = u._id
