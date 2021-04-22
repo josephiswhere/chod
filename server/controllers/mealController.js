@@ -4,11 +4,8 @@ const mealController = {};
 
 // createMeal(name, description, chefID)
 mealController.createMeal = (req, res, next) => {
-  console.log('mealController.createMeal');
+  // console.log('mealController.createMeal');
   const { name, description, chefID } = req.body;
-
-console.log(55555, name, description, chefID)
-
   const text =
     'INSERT INTO meals (name, description, chef_id) VALUES ($1, $2, $3) RETURNING _id';
   const values = [name, description, chefID];
@@ -26,7 +23,7 @@ console.log(55555, name, description, chefID)
 };
 
 mealController.getMeals = (req, res, next) => {
-  console.log('mealController.getMeals');
+  // console.log('mealController.getMeals');
   const { userid } = req.cookies;
   const text =
     'SELECT meal._id AS meadID, name, description FROM meals WHERE chef_id = ($1)';
