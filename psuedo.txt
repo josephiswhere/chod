@@ -1,0 +1,7 @@
+X add slots column to events
+X add slots column to all existing events
+
+when subscription to is made
+remove 1 from available in events
+
+X return avaiable from getevents

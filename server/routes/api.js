@@ -43,10 +43,12 @@ router.post('/events', eventController.createEvent, (req, res) => {
 });
 
 // createSubscription(eventID, userID)
-router.post('/subs', subscriptionController.createSubscription, (req, res) => {
-  return res.status(200).json({
-    message: 'Subscription created.',
-  });
+router.post('/subs',
+  subscriptionController.createSubscription,
+  eventController.decreaseSlots, (req, res) => {
+    return res.status(200).json({
+      message: 'Subscription created.',
+   });
 });
 
 router.post(
