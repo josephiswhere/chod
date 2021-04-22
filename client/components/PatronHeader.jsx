@@ -56,13 +56,13 @@ const PatronHeader = ({ user, userId, isAuthenticated }) => {
         <CardImg top width="100%" src="http://placekitten.com/g/200/150" alt="Card image cap" />
         <CardBody>
           <CardTitle tag="h5">{user}</CardTitle>
-          <CardSubtitle tag="h6" className="mb-2 text-muted">Card subtitle</CardSubtitle>
-          <CardText>I love Indian food</CardText>
+          <CardSubtitle tag="h6" className="mb-2 text-muted">Cook and lover</CardSubtitle>
+          <CardText>I am an Italian pastry chef with 12 years of experience at michelin star restaurants. Covid has been hard on me and my familly, but thankfully I get to keep cooking for amazing people thanks to CheftastiQL</CardText>
           <Button>edit</Button>
         </CardBody>
       </Card>
       {myEventsList.length ? 
-        <ListGroup style={{ display:'inline-block', overflowY:'scroll', position: 'relative', left: '10%', width: '60%' , maxHeight:'320px'}}>
+        <ListGroup style={{ display:'inline-block', overflowY:'scroll', position: 'relative', left: '10%', width: '50%' , maxHeight:'320px'}}>
           <h2>My Upcoming Events</h2>
           <TransitionGroup className='upcoming-events-list'>
             {myEventsList.map(({ subid, name, date, chef, discription }) => (
