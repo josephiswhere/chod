@@ -38,15 +38,11 @@ const PatronHeader = ({ user, userId, isAuthenticated }) => {
   const unsubscribe = (id) => {
     console.log('id from within patronHeader', userId);
     console.log('unsubscribe', id);
-    fetch('api/subs', {
+    fetch(`api/subs/?subID=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        userID: userId,
-        eventID: id,
-      }),
     })
       .then((res) => res.json())
       .then((results) => {
