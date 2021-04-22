@@ -8,15 +8,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = () => {
   const [user, setUser] = useState('test user');
+  const [userId, setUserId] = useState('abc');
   const [userType, setUserType] = useState('patron');
   const [isAuthenticated, setisAuthenticated] = useState(false);
   return (
     <div className='router'>
       <NavBar
         user={user}
+        userId={userId}
         isAuthenticated={isAuthenticated}
         setUser={setUser}
         setisAuthenticated={setisAuthenticated}
+        setUserId={setUserId}
         userType={userType}
         setUserType={setUserType}
       />
@@ -30,6 +33,7 @@ const App = () => {
               <PatronContainer
                 user={user}
                 isAuthenticated={isAuthenticated}
+                userId={userId}
               />
             )}
           />
