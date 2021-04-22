@@ -2,9 +2,8 @@ const db = require('../models/cheftasticModels');
 
 const subscriptionController = {};
 
-// createSubscription(eventID, userID)
 subscriptionController.createSubscription = (req, res, next) => {
-  console.log('subscriptionController.createSubscription');
+  // console.log('subscriptionController.createSubscription');
   const { eventID } = req.body;
   const { userID } = req.cookies;
   const text = 'INSERT INTO subscriptions (user_id, event_id) VALUES ($1, $2)';
@@ -22,7 +21,7 @@ subscriptionController.createSubscription = (req, res, next) => {
 };
 
 subscriptionController.getSubs = (req, res, next) => {
-  console.log('subscriptionController.getSub');
+  // console.log('subscriptionController.getSub');
   const { userID } = req.cookies;
   const text = `SELECT
                 s._id AS subID, date, m.name, description, u.name
@@ -40,6 +39,23 @@ subscriptionController.getSubs = (req, res, next) => {
     .catch((err) => {
       return next({
         log: `Error in getSubs middleware: ${err}`,
+        message: { err: 'An error occurred' },
+      });
+    });
+};
+
+subscriptionController.deleteSubscription = (req, res, next) => {
+  // console.log('subscriptionController.deleteSubscription');
+  const { subID } = req.query;
+  const text = `DELETE FROM subscriptions WHERE _id = ($1)`;
+  const values = [subID];
+  db.query(text, values)
+    .then((resp) => {
+      return next();
+    })
+    .catch((err) => {
+      return next({
+        log: `Error in deleteSubscription middleware: ${err}`,
         message: { err: 'An error occurred' },
       });
     });

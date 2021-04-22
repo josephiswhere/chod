@@ -22,7 +22,6 @@ app.use('/api', apiRouter);
 
 app.use((req, res) => res.status(404).send('404: Page Not Found'));
 
-// error handling
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: 'Express error handler caught unknown middleware error',
