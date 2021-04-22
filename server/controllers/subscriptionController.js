@@ -20,7 +20,6 @@ subscriptionController.createSubscription = (req, res, next) => {
     });
 };
 
-//
 subscriptionController.getSubs = (req, res, next) => {
   console.log('subscriptionController.getSub');
   const { userid } = req.cookies;

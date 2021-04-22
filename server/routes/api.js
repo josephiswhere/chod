@@ -87,6 +87,10 @@ router.get('/subs', subscriptionController.getSubs, (req, res) => {
   return res.status(200).json(res.locals.subs);
 });
 
+router.get('/meals', mealController.getMeals, (req, res) => {
+  return res.status(200).json(res.locals.meals);
+});
+
 // USERS
 // create user - name/password/ischef
 // log in - stretch - session data?
