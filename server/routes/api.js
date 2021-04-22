@@ -58,11 +58,12 @@ router.post(
     //check if login succeeded
     if (res.locals.loggedIn) {
       //send message let access
-      const { name } = res.locals.userInfo;
+      const { name, _id } = res.locals.userInfo;
       return res.status(200).json({
         message: 'Login successful',
         loggedIn: true,
         name,
+        id: _id,
       });
     } else {
       //send message, dont let access

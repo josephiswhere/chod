@@ -12,7 +12,7 @@ import {
   Alert,
 } from 'reactstrap';
 
-const LoginModal = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
+const LoginModal = ({ userId, setUserId, user, setUser, isAuthenticated, setisAuthenticated }) => {
   const [isOpen, setIsOpen] = useState(false);
   //const [name, setName] = useState(null);
   const [username, setUsername] = useState('');
@@ -44,10 +44,11 @@ const LoginModal = ({ user, setUser, isAuthenticated, setisAuthenticated }) => {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log('result successful in Login onSubmit', result);
+        //console.log('result successful in Login onSubmit', result);
         if (result.loggedIn === true) {
-          console.log('login successful in Login onSubmit');
+          //console.log('login successful in Login onSubmit');
           setUser(result.name);
+          setUserId(result.id);
           setisAuthenticated(true);
         }
         else if (result.loggedIn === false) {
