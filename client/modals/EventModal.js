@@ -37,6 +37,7 @@ const EventModal = () => {
 
   const [ meal, mealOnChange ] = useInput('');
   const [ description, descriptionOnChange ] = useInput('');
+  const [ slots, slotsOnChange ] = useInput('');
   const [date, setDate] = useState()
 
   const [modal, setModal] = useState(false)
@@ -54,8 +55,9 @@ const EventModal = () => {
     //   date: getFormattedDate(date)
     // }
   
-  const chefID = document.cookie.substr(document.cookie.indexOf('=') + 1)
+  const chefID = document.cookie.substr(document.cookie.lastIndexOf('=') + 1)
   const body = { name: meal, description: description, chefID: chefID}
+  
 
 console.log(33333, body)
 
@@ -74,7 +76,10 @@ console.log(44444, res)
 
     if (res.status === 200) {
       
-      const event = { date: getFormattedDate(date), mealID: res.data.mealID }
+      const event = { date: getFormattedDate(date), mealID: res.data.mealID, slots: slots }
+
+console.log(454545, event)
+
       // INSERT NEW EVENT!
       fetch('/api/events', {
         method: 'POST',
@@ -115,7 +120,7 @@ console.log(55555, res)
                   name="meal"
                   id="meal"
                   placeholder="What are you cooking up?"
-                  onChange={mealOnChange}  // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
+                  onChange={mealOnChange}
                 />
                 <Label for="meal">Description</Label>
                 <Input 
@@ -123,7 +128,7 @@ console.log(55555, res)
                   name="description"
                   id="description"
                   placeholder="Tell us about this tasty meal!"
-                  onChange={descriptionOnChange}  // WILL UPDATE THE STATE PER EACH CHARACTER CHANGE
+                  onChange={descriptionOnChange}
                 />
                 <Label for="meal">Date</Label>
                 <DatePicker date={date} onDateChange={setDate} locale={enUS}>
@@ -134,6 +139,15 @@ console.log(55555, res)
                     />
                   )}
                 </DatePicker>
+                <Label for="slots">Number of Meals Available</Label>
+                <Input 
+                  type="number"
+                  pattern="[0-9]*"
+                  name="slots"
+                  id="slots"
+                  placeholder="How many meals will be available?"
+                  onChange={slotsOnChange}
+                />
                 <Button
                   color="dark"
                   style={{marginTop: '2rem'}}
